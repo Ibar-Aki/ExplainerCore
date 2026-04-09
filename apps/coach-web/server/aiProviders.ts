@@ -46,6 +46,8 @@ const providerConfigs: ProviderConfig[] = [
   },
 ];
 
+const providerRequestTimeoutMs = 20000;
+
 function getConfig(id: ProviderId) {
   const config = providerConfigs.find((entry) => entry.id === id);
   if (!config) {
@@ -74,8 +76,27 @@ function extractJsonObject(raw: string) {
   return cleaned.slice(start, end + 1);
 }
 
+async function fetchWithTimeout(url: string, init: RequestInit, timeoutMs = providerRequestTimeoutMs) {
+  const controller = new AbortController();
+  const timeoutHandle = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...init,
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error(`Provider request timed out after ${timeoutMs}ms`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeoutHandle);
+  }
+}
+
 async function callOpenAI(systemPrompt: string, userPrompt: string, model: string, apiKey: string) {
-  const response = await fetch('https://api.openai.com/v1/responses', {
+  const response = await fetchWithTimeout('https://api.openai.com/v1/responses', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -118,7 +139,7 @@ async function callOpenAI(systemPrompt: string, userPrompt: string, model: strin
 }
 
 async function callClaude(systemPrompt: string, userPrompt: string, model: string, apiKey: string) {
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetchWithTimeout('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -160,7 +181,7 @@ async function callClaude(systemPrompt: string, userPrompt: string, model: strin
 }
 
 async function callGemini(systemPrompt: string, userPrompt: string, model: string, apiKey: string) {
-  const response = await fetch(
+  const response = await fetchWithTimeout(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
       method: 'POST',

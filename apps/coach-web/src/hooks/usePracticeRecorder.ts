@@ -23,6 +23,8 @@ export function usePracticeRecorder(options: UsePracticeRecorderOptions) {
   const chunksRef = useRef<Blob[]>([]);
   const finalTranscriptRef = useRef('');
   const timerRef = useRef<number | null>(null);
+  const stoppingRef = useRef(false);
+  const normalStopRef = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -40,14 +42,38 @@ export function usePracticeRecorder(options: UsePracticeRecorderOptions) {
   }
 
   async function stopRecording() {
-    mediaRecorderRef.current?.stop();
-    speechRecognitionRef.current?.stop();
-    mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
+    if (stoppingRef.current) {
+      return;
+    }
+
+    stoppingRef.current = true;
+    normalStopRef.current = true;
+
+    const recorder = mediaRecorderRef.current;
+    const recognition = speechRecognitionRef.current;
+    const stream = mediaStreamRef.current;
+
+    try {
+      recognition?.stop();
+    } catch {
+      // Ignore SpeechRecognition stop races.
+    }
+
+    try {
+      if (recorder && recorder.state !== 'inactive') {
+        recorder.stop();
+      }
+    } catch {
+      // Ignore MediaRecorder stop races.
+    }
+
+    stream?.getTracks().forEach((track) => track.stop());
     mediaRecorderRef.current = null;
     mediaStreamRef.current = null;
     speechRecognitionRef.current = null;
     stopTimer();
     setIsRecording(false);
+    stoppingRef.current = false;
   }
 
   async function startRecording(timeLimitSec: number) {
@@ -87,6 +113,8 @@ export function usePracticeRecorder(options: UsePracticeRecorderOptions) {
             onError('録音ファイルの保存に失敗しました。ネットワークかローカル API を確認してください。');
           }
         }
+
+        normalStopRef.current = false;
       };
 
       const SpeechRecognitionCtor = window.SpeechRecognition ?? window.webkitSpeechRecognition;
@@ -112,7 +140,15 @@ export function usePracticeRecorder(options: UsePracticeRecorderOptions) {
           finalTranscriptRef.current = finalText;
           setTranscript(`${finalText}${interimText}`.trim());
         };
-        recognition.onerror = () => {
+        recognition.onerror = (event) => {
+          if (normalStopRef.current && event.error === 'aborted') {
+            return;
+          }
+
+          if (event.error === 'no-speech' || event.error === 'aborted') {
+            return;
+          }
+
           onError('ブラウザ音声認識に失敗しました。必要なら手動で文字起こしを補ってください。');
         };
         recognition.start();
@@ -138,6 +174,8 @@ export function usePracticeRecorder(options: UsePracticeRecorderOptions) {
   }
 
   function resetRecorderSession() {
+    stoppingRef.current = false;
+    normalStopRef.current = false;
     mediaRecorderRef.current?.stream.getTracks().forEach((track) => track.stop());
     mediaRecorderRef.current = null;
     mediaStreamRef.current?.getTracks().forEach((track) => track.stop());

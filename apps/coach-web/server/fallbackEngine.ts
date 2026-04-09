@@ -184,6 +184,7 @@ export function createFallbackEvaluation(
     .map((item) => `${item.label}は次回の重点改善対象です。`)
     .slice(0, 2);
   const nextActions = breakdown
+    .slice()
     .sort((left, right) => left.score - right.score)
     .slice(0, 3)
     .map((item) => `${item.label}: ${item.improvement}`);

@@ -2,7 +2,7 @@
 
 - 作成日: 2026-04-09 00:20 JST
 - 作成者: Codex (GPT-5)
-- 更新日: 2026-04-09
+- 更新日: 2026-04-10
 
 ## 目的
 
@@ -59,6 +59,7 @@ GEMINI_MODEL=gemini-2.0-flash
 - `Provider Adapter` のカードが `CONFIGURED` になっている
 - 生成結果の `providerMessage` に provider 名と model 名が出る
 - 採点結果の `Mode` が `Remote` になる
+- Remote 呼び出しが一定時間で応答しない場合も、fallback に切り替わり `providerMessage` に残る
 - Remote 失敗時は fallback に落ち、原因が `providerMessage` に残る
 
 ## 推奨運用

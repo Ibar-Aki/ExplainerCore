@@ -56,6 +56,7 @@ ExplainerCore は、日本語の社内会議や報告を主戦場として、説
 - 全体方針: [`PLANS.md`](C:/Work_Codex/ExplainerCore/PLANS.md)
 - 成功条件とスコープ: [`project-charter.md`](C:/Work_Codex/ExplainerCore/docs/strategy/project-charter.md)
 - 実装構造: [`system-architecture.md`](C:/Work_Codex/ExplainerCore/docs/strategy/system-architecture.md)
+- レポジトリレビュー記録: [`repository-review-2026-04-10.md`](C:/Work_Codex/ExplainerCore/docs/strategy/repository-review-2026-04-10.md)
 - 評価設計: [`baseline-framework.md`](C:/Work_Codex/ExplainerCore/docs/evaluation/baseline-framework.md)
 - 訓練運用: [`operating-playbook.md`](C:/Work_Codex/ExplainerCore/docs/training/operating-playbook.md)
 - UI/UX 構成: [`app-information-architecture.md`](C:/Work_Codex/ExplainerCore/docs/ux/app-information-architecture.md)
@@ -75,6 +76,7 @@ npm run dev:all
 確認用コマンド:
 
 ```bash
+npm test
 npm run typecheck
 npm run build
 ```
@@ -96,6 +98,6 @@ npm run build
 
 ## 直近の次アクション
 
-- API キーを入れて Remote 採点を 1 回ずつ確認する
-- deep research の調査結果を `docs/research` に追記していく
-- Baseline の自己認識と AI 採点との差分から、個別の改善仮説を整理する
+- API キーを入れて OpenAI / Claude / Gemini の Remote 採点を 1 回ずつ確認する
+- 実運用セッションを増やし、履歴からルーブリックの重みと nextActions の質を調整する
+- deep research の調査結果を `docs/research` に追記し、`data/scenarios` と `data/rubrics` に反映する

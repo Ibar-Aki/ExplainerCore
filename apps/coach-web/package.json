@@ -9,6 +9,7 @@
     "server:watch": "tsx watch server/index.ts",
     "dev:all": "concurrently -k -n api,web -c yellow,cyan \"npm:server:watch\" \"npm:dev\"",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.server.json",
+    "test": "tsx --test tests/**/*.test.ts",
     "build": "npm run typecheck && vite build",
     "preview": "vite preview"
   },
