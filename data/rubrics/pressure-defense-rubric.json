@@ -1,0 +1,50 @@
+{
+  "id": "pressure-defense-rubric",
+  "moduleId": "pressure-defense-simulator",
+  "title": "詰め対応ルーブリック",
+  "description": "厳しい追及に対する防御的説明の質を評価する。",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "labels": {
+      "1": "崩れている",
+      "3": "最低限守れている",
+      "5": "落ち着いて押し返せる"
+    }
+  },
+  "criteria": [
+    {
+      "id": "defense",
+      "name": "論点維持",
+      "weight": 0.35,
+      "description": "追及されても論点を失わないか。",
+      "signals": ["論点固定", "質問意図の再確認", "枝葉に流れない"]
+    },
+    {
+      "id": "clarity",
+      "name": "事実の明確さ",
+      "weight": 0.25,
+      "description": "事実と見解を分けて説明しているか。",
+      "signals": ["事実と解釈の分離", "不確実性の明示", "不用意な断定回避"]
+    },
+    {
+      "id": "composure",
+      "name": "落ち着き",
+      "weight": 0.2,
+      "description": "圧を受けても応答が乱れないか。",
+      "signals": ["言い直しが少ない", "感情的反応が少ない", "一定のテンポ"]
+    },
+    {
+      "id": "repair",
+      "name": "着地力",
+      "weight": 0.2,
+      "description": "次の確認事項や着地点を示せるか。",
+      "signals": ["次アクション", "宿題化", "関係修復"]
+    }
+  ],
+  "aggregateMetrics": [
+    "answerPreparationSec",
+    "hedgeMarkerCount",
+    "repairMarkerCount"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "baseline-assessment-rubric",
+  "moduleId": "baseline-assessor",
+  "title": "ベースライン診断ルーブリック",
+  "description": "現状の説明力と会話力を横断評価する共通ルーブリック。",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "labels": {
+      "1": "大きく改善が必要",
+      "3": "実務で最低限通用",
+      "5": "安定して強い"
+    }
+  },
+  "criteria": [
+    {
+      "id": "clarity",
+      "name": "説明の明快さ",
+      "weight": 0.25,
+      "description": "結論と要点が明確か。",
+      "signals": ["結論先行", "曖昧表現が少ない", "情報の過不足が少ない"]
+    },
+    {
+      "id": "structure",
+      "name": "構造化",
+      "weight": 0.25,
+      "description": "主張と理由が整理されているか。",
+      "signals": ["順序立て", "理由の分離", "次アクション提示"]
+    },
+    {
+      "id": "speed",
+      "name": "応答速度",
+      "weight": 0.2,
+      "description": "反応開始と立ち上がりの速さ。",
+      "signals": ["初動の速さ", "最初の一文の強さ", "無音が長すぎない"]
+    },
+    {
+      "id": "defense",
+      "name": "詰め対応力",
+      "weight": 0.15,
+      "description": "追及に対して論点を維持できるか。",
+      "signals": ["事実と解釈の分離", "不用意な譲歩回避", "論点の固定"]
+    },
+    {
+      "id": "persuasion",
+      "name": "説得力",
+      "weight": 0.15,
+      "description": "相手視点で納得感を作れているか。",
+      "signals": ["相手便益", "懸念先回り", "意思決定を前進"]
+    }
+  ],
+  "aggregateMetrics": [
+    "answerPreparationSec",
+    "charCount",
+    "structureMarkerCount"
+  ]
+}

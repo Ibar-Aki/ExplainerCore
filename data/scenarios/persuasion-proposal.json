@@ -1,0 +1,32 @@
+[
+  {
+    "id": "persuasion-automation-proposal",
+    "moduleId": "persuasion-lab",
+    "title": "業務自動化の提案",
+    "difficulty": "stretch",
+    "context": "定例業務を自動化したいが、関係者は手間とリスクを懸念している。",
+    "role": "あなたは提案者。相手は現場責任者。",
+    "prompt": "自動化提案の狙い、得られる効果、導入時の懸念への対応を説明してください。",
+    "followUps": [
+      "現場の負担が増えるのではないですか。",
+      "失敗したときの影響はどう考えていますか。"
+    ],
+    "successSignals": ["相手便益", "リスクと対策", "次の意思決定提案"],
+    "constraints": ["理想論だけで押さない"]
+  },
+  {
+    "id": "persuasion-priority-shift",
+    "moduleId": "persuasion-lab",
+    "title": "優先順位変更の説得",
+    "difficulty": "pressure",
+    "context": "限られたリソースの中で、別テーマを優先したい。",
+    "role": "あなたは推進役。相手は今の優先順位を変えたくない。",
+    "prompt": "なぜ今この優先順位変更が必要かを、反対意見を踏まえて説明してください。",
+    "followUps": [
+      "その変更で失うものの方が大きいのでは。",
+      "今のままでも困っていません。なぜ変えるのですか。"
+    ],
+    "successSignals": ["相手視点", "トレードオフ説明", "クロージング"],
+    "constraints": ["相手の懸念を矮小化しない"]
+  }
+]

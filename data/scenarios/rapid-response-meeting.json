@@ -1,0 +1,33 @@
+[
+  {
+    "id": "rapid-status-surprise",
+    "moduleId": "rapid-response-drill",
+    "title": "突然の進捗確認",
+    "difficulty": "basic",
+    "context": "定例会議で、急に担当領域の状況を振られる。",
+    "role": "あなたは担当者。会議参加者は短く状況を知りたい。",
+    "prompt": "今の進捗を 30 秒で共有してください。課題があれば一言で添えてください。",
+    "followUps": [
+      "一番気にしているリスクは何ですか。",
+      "来週までに何が変わりますか。"
+    ],
+    "successSignals": ["冒頭 5 秒で結論", "要点 2 つ以内", "次の一手"],
+    "constraints": ["長い背景説明をしない"]
+  },
+  {
+    "id": "rapid-trouble-summary",
+    "moduleId": "rapid-response-drill",
+    "title": "トラブル即時共有",
+    "difficulty": "pressure",
+    "context": "会議中に障害の状況説明を求められる。",
+    "role": "あなたは一次対応者。まだ全容は見えていない。",
+    "prompt": "現時点で分かっていることだけで、障害状況を 45 秒で共有してください。",
+    "followUps": [
+      "利用者影響はありますか。",
+      "原因は何だと思っていますか。"
+    ],
+    "successSignals": ["事実ベース", "不確実性明示", "次の確認事項"],
+    "constraints": ["推測を断定しない"]
+  }
+]
+

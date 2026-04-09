@@ -1,0 +1,15 @@
+apps/coach-web/node_modules/
+apps/coach-web/dist/
+apps/coach-web/.env
+apps/coach-web/.env.*
+apps/coach-web/.vite/
+apps/coach-web/coverage/
+apps/coach-web/*.log
+output/
+.serena/
+sessions/audio/*
+!sessions/audio/.gitkeep
+sessions/transcripts/*
+!sessions/transcripts/.gitkeep
+sessions/reviews/*
+!sessions/reviews/.gitkeep

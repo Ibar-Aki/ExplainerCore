@@ -1,0 +1,50 @@
+{
+  "id": "persuasion-rubric",
+  "moduleId": "persuasion-lab",
+  "title": "説得ルーブリック",
+  "description": "提案、合意形成、反論処理を評価する。",
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "labels": {
+      "1": "相手が動かない",
+      "3": "一定の納得感がある",
+      "5": "動機づけと着地が強い"
+    }
+  },
+  "criteria": [
+    {
+      "id": "persuasion",
+      "name": "相手視点",
+      "weight": 0.35,
+      "description": "相手の関心軸に合わせられているか。",
+      "signals": ["相手便益", "意思決定負担の軽減", "懸念への配慮"]
+    },
+    {
+      "id": "structure",
+      "name": "提案構造",
+      "weight": 0.25,
+      "description": "提案の流れが整理されているか。",
+      "signals": ["課題", "提案", "効果", "次の一手"]
+    },
+    {
+      "id": "objectionHandling",
+      "name": "反論処理",
+      "weight": 0.2,
+      "description": "反対意見に備えているか。",
+      "signals": ["反論先回り", "トレードオフ説明", "リスクの透明性"]
+    },
+    {
+      "id": "closing",
+      "name": "クロージング",
+      "weight": 0.2,
+      "description": "会話を前に進める締めがあるか。",
+      "signals": ["判断依頼", "合意形成", "次アクション明示"]
+    }
+  ],
+  "aggregateMetrics": [
+    "answerPreparationSec",
+    "benefitMarkerCount",
+    "closingMarkerCount"
+  ]
+}
