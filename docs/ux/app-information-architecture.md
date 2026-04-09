@@ -2,7 +2,7 @@
 
 - 作成日: 2026-04-09 00:20 JST
 - 作成者: Codex (GPT-5)
-- 更新日: 2026-04-09
+- 更新日: 2026-04-10
 
 ## 画面構成
 
@@ -30,6 +30,7 @@
 ### 4. Module Workspace
 
 - Baseline Self Check
+- Evidence-Based Warmups
 - Session Setup
 - Scenario
 - Record / Transcript
@@ -50,6 +51,8 @@
 - `Provider Adapter` は設定状態のみを表示する
 - 左側ナビゲーションでモジュールを切り替える
 - `Baseline Assessor` では自己診断スライダーと自己認識メモを先に入力する
+- 各実戦モジュールには、研究ベースの短時間ウォームアップ群を表示する
+- ウォームアップの `今回の重点に反映` ボタンで、セッション生成時の focus に直結させる
 - Baseline の自己診断は draft としてローカル保存し、採点時にはセッション記録にも保存する
 - 中央ワークスペースで `Session Setup` `Scenario` `Record / Transcript` `Rubric` `Evaluation` を順に扱う
 - 下部の `Session Review Dashboard` で保存済みセッション比較と成長サマリーを扱う
@@ -61,6 +64,7 @@
 - `ProviderPanel.tsx`: provider 選択と設定状態表示
 - `ModuleNav.tsx`: モジュール切替
 - `BaselineSelfCheckPanel.tsx`: 自己診断 UI
+- `EvidenceWarmupsPanel.tsx`: 根拠付きウォームアップ UI
 - `PracticeWorkspace.tsx`: 訓練ワークスペース
 - `ReviewDashboardPanel.tsx`: 履歴比較ダッシュボード
 - `usePracticeRecorder.ts`: 録音と音声認識
@@ -72,6 +76,7 @@
 - モジュール別平均スコアの比較カード
 - 直近 3 セッションとその前 3 セッションの差分表示
 - 次に鍛えるべきモジュールの推奨表示
+- モジュール別に最適化した short warmup cards と focus 反映導線
 
 ## 導線方針
 

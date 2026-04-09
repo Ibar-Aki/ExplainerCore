@@ -2,7 +2,7 @@
 
 - 作成日: 2026-04-09 00:20 JST
 - 作成者: Codex (GPT-5)
-- 更新日: 2026-04-09
+- 更新日: 2026-04-10
 
 ## 概要
 
@@ -40,6 +40,7 @@ ExplainerCore は、日本語の社内会議や報告を主戦場として、説
 - Baseline の自己診断スライダーと自己認識メモはローカル draft として保持され、Baseline 採点時にはセッション記録にも保存されます
 - 継続評価の速度系メトリクスは、現時点では「質問提示後に録音開始へ入るまでの準備時間」を `answerPreparationSec` として扱います
 - rubrics/scenarios はサーバープロセス内でキャッシュされ、履歴は `sessions/reviews/index.json` を優先して参照します
+- 各訓練モジュールには、研究ベースで短時間に回せる `Evidence-Based Warmups` が付き、そこから今回の重点へ直接反映できます
 
 ## ディレクトリ方針
 
@@ -88,9 +89,10 @@ npm run build
 
 1. `prompts/deep-research` を使って説明力・会話力の知見を集める
 2. `Baseline Assessor` で自己診断と初回採点を行う
-3. 弱点に応じて `Rapid Response Drill` / `Pressure Defense Simulator` / `Persuasion Lab` を回す
-4. `Session Review Dashboard` で履歴比較し、次の重点を決める
-5. `templates/session-review-template.md` を使って重要セッションを手動レビューする
+3. 各モジュール冒頭の `Evidence-Based Warmups` を 1 つ選び、今回の重点へ反映してから回す
+4. 弱点に応じて `Rapid Response Drill` / `Pressure Defense Simulator` / `Persuasion Lab` を回す
+5. `Session Review Dashboard` で履歴比較し、次の重点を決める
+6. `templates/session-review-template.md` を使って重要セッションを手動レビューする
 
 ## 直近の次アクション
 

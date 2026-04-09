@@ -167,7 +167,8 @@ button {
 
 .provider-grid,
 .rubric-list,
-.history-list {
+.history-list,
+.warmup-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 14px;
@@ -178,7 +179,8 @@ button {
 .module-button,
 .rubric-card,
 .history-card,
-.breakdown-card {
+.breakdown-card,
+.warmup-card {
   padding: 16px;
   border-radius: 22px;
   border: 1px solid rgba(17, 50, 64, 0.09);
@@ -189,7 +191,8 @@ button {
 .provider-card:hover,
 .module-button:hover,
 .history-card:hover,
-.breakdown-card:hover {
+.breakdown-card:hover,
+.warmup-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 36px rgba(17, 50, 64, 0.08);
 }
@@ -250,7 +253,8 @@ button {
 .provider-card strong,
 .rubric-card strong,
 .history-card strong,
-.breakdown-card strong {
+.breakdown-card strong,
+.warmup-card strong {
   display: block;
 }
 
@@ -430,6 +434,79 @@ textarea {
   margin: 8px 0 0;
 }
 
+.warmup-card {
+  background: linear-gradient(180deg, rgba(255, 251, 244, 0.96), rgba(241, 248, 246, 0.9));
+}
+
+.warmup-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.warmup-meta span:last-child,
+.warmup-why,
+.warmup-footer small {
+  color: #6c7a80;
+  font-size: 0.85rem;
+}
+
+.evidence-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.evidence-badge.strong {
+  background: rgba(18, 120, 132, 0.14);
+  color: #0d6169;
+}
+
+.evidence-badge.medium {
+  background: rgba(212, 137, 42, 0.14);
+  color: #9a5d16;
+}
+
+.evidence-badge.supporting {
+  background: rgba(108, 122, 128, 0.14);
+  color: #52656d;
+}
+
+.warmup-steps h4,
+.warmup-focus strong {
+  margin: 0;
+}
+
+.warmup-steps ol {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.warmup-focus {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(19, 123, 132, 0.08);
+}
+
+.warmup-focus p {
+  margin: 8px 0 0;
+}
+
+.warmup-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-end;
+  margin-top: 14px;
+}
+
+.warmup-footer .ghost-button {
+  flex-shrink: 0;
+}
+
 .recording-bar {
   display: flex;
   flex-wrap: wrap;
@@ -512,5 +589,10 @@ textarea {
   .module-hero {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .warmup-footer {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

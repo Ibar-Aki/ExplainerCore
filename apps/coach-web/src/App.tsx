@@ -1,6 +1,7 @@
 import { startTransition, useDeferredValue, useEffect, useRef, useState } from 'react';
 import { evaluateSession, fetchBootstrap, fetchHistory, generateSession, uploadAudio } from './api';
 import { BaselineSelfCheckPanel } from './components/BaselineSelfCheckPanel.js';
+import { EvidenceWarmupsPanel } from './components/EvidenceWarmupsPanel.js';
 import { ModuleNav } from './components/ModuleNav.js';
 import { PracticeWorkspace } from './components/PracticeWorkspace.js';
 import { ProviderPanel } from './components/ProviderPanel.js';
@@ -15,6 +16,7 @@ import {
   saveBaselineDraft,
 } from './lib/baseline.js';
 import { buildDashboardSnapshot } from './lib/dashboard.js';
+import { getWarmupsForModule } from './lib/evidenceWarmups.js';
 import type {
   BootstrapData,
   EvaluationResult,
@@ -89,6 +91,7 @@ export default function App() {
   const currentModule = bootstrap?.modules.find((module) => module.id === selectedModuleId);
   const currentRubric = bootstrap?.rubrics.find((rubric) => rubric.moduleId === selectedModuleId);
   const currentScenarios = bootstrap?.scenarios.filter((scenario) => scenario.moduleId === selectedModuleId) ?? [];
+  const currentWarmups = getWarmupsForModule(selectedModuleId);
 
   useEffect(() => {
     void (async () => {
@@ -216,6 +219,20 @@ export default function App() {
     }
   }
 
+  function handleApplyWarmupFocus(template: string) {
+    setCustomFocus((current) => {
+      if (!current.trim()) {
+        return template;
+      }
+
+      if (current.includes(template)) {
+        return current;
+      }
+
+      return `${current} / ${template}`;
+    });
+  }
+
   return (
     <div className="app-shell">
       <div className="ambient ambient-left" />
@@ -286,6 +303,13 @@ export default function App() {
                   questions={baselineQuestions}
                   onAnswersChange={(updater) => setBaselineAnswers((current) => updater(current))}
                   onNoteChange={setBaselineNote}
+                />
+              )}
+
+              {selectedModuleId !== 'session-review-dashboard' && (
+                <EvidenceWarmupsPanel
+                  warmups={currentWarmups}
+                  onApplyFocusTemplate={handleApplyWarmupFocus}
                 />
               )}
 
