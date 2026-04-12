@@ -2,7 +2,7 @@
 
 - 作成日: 2026-04-09 00:20 JST
 - 作成者: Codex (GPT-5)
-- 更新日: 2026-04-12
+- 更新日: 2026-04-13
 
 ## 概要
 
@@ -57,6 +57,7 @@ ExplainerCore は、日本語の社内会議や報告を主戦場として、説
 
 ## まず読む文書
 
+- 引継ぎ書: [`maintainer-handover.md`](C:/Work_Codex/ExplainerCore/docs/strategy/maintainer-handover.md)
 - 全体方針: [`PLANS.md`](C:/Work_Codex/ExplainerCore/PLANS.md)
 - 成功条件とスコープ: [`project-charter.md`](C:/Work_Codex/ExplainerCore/docs/strategy/project-charter.md)
 - 実装構造: [`system-architecture.md`](C:/Work_Codex/ExplainerCore/docs/strategy/system-architecture.md)
