@@ -15,6 +15,21 @@
     "constraints": ["長い背景説明をしない"]
   },
   {
+    "id": "rapid-executive-brief",
+    "moduleId": "rapid-response-drill",
+    "title": "経営層向け 60 秒サマリー",
+    "difficulty": "stretch",
+    "context": "会議終盤に、経営層から担当テーマの要点だけを求められる。",
+    "role": "あなたは推進担当。相手は背景ではなく判断材料を知りたい。",
+    "prompt": "担当テーマの現状、最大の懸念、今ほしい判断を 60 秒で共有してください。",
+    "followUps": [
+      "その懸念はどの程度確からしいですか。",
+      "今すぐ決めない場合の影響は何ですか。"
+    ],
+    "successSignals": ["結論先行", "判断材料を 3 点以内に絞る", "判断依頼で締める"],
+    "constraints": ["背景説明を長くしない", "断定できないことを断定しない"]
+  },
+  {
     "id": "rapid-trouble-summary",
     "moduleId": "rapid-response-drill",
     "title": "トラブル即時共有",
@@ -28,6 +43,20 @@
     ],
     "successSignals": ["事実ベース", "不確実性明示", "次の確認事項"],
     "constraints": ["推測を断定しない"]
+  },
+  {
+    "id": "rapid-online-meeting-hand-off",
+    "moduleId": "rapid-response-drill",
+    "title": "オンライン会議の急な判断依頼",
+    "difficulty": "pressure",
+    "context": "オンライン会議で議論が拡散し、急にあなたへ整理役が回ってくる。",
+    "role": "あなたは担当者。参加者は結論が見えず、次の進め方を求めている。",
+    "prompt": "ここまでの議論を踏まえ、今の論点、暫定結論、次の確認事項を 90 秒で整理してください。",
+    "followUps": [
+      "まだ決めきれない理由を一言で言うと何ですか。",
+      "次の会議までに誰が何を持つべきですか。"
+    ],
+    "successSignals": ["論点固定", "暫定結論の提示", "宿題化まで届く"],
+    "constraints": ["議論を蒸し返さない", "全論点を拾おうとしすぎない"]
   }
 ]
-

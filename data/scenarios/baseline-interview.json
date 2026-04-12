@@ -15,6 +15,21 @@
     "constraints": ["言い訳に見せない", "情報不足をごまかさない"]
   },
   {
+    "id": "baseline-executive-status-brief",
+    "moduleId": "baseline-assessor",
+    "title": "経営層向け 30 秒状況報告",
+    "difficulty": "basic",
+    "context": "短い会議で、経営層から担当案件の現状だけを端的に求められる。",
+    "role": "あなたは担当リーダー。相手は詳細より意思決定に必要な要点を知りたい。",
+    "prompt": "担当案件の現状、最大のリスク、次の打ち手を 30 秒で説明してください。",
+    "followUps": [
+      "そのリスクは今週中に顕在化しますか。",
+      "私が今判断すべきことは何ですか。"
+    ],
+    "successSignals": ["冒頭で結論", "判断材料を 2 点以内に絞る", "次の判断依頼"],
+    "constraints": ["背景説明に流れない", "詳細を詰め込みすぎない"]
+  },
+  {
     "id": "baseline-priority-change",
     "moduleId": "baseline-assessor",
     "title": "優先順位変更の説明",
@@ -28,6 +43,20 @@
     ],
     "successSignals": ["相手視点", "トレードオフ明示", "合意形成の姿勢"],
     "constraints": ["断定しすぎない", "感情論に寄らない"]
+  },
+  {
+    "id": "baseline-abstract-standardization",
+    "moduleId": "baseline-assessor",
+    "title": "抽象施策の具体化説明",
+    "difficulty": "stretch",
+    "context": "部門横断で進めたい標準化施策を、背景を知らない関係者へ説明する。",
+    "role": "あなたは推進担当。相手は施策の抽象度が高いことに不安を持っている。",
+    "prompt": "標準化施策の狙い、現場への影響、最初の実施範囲を 60 秒で説明してください。",
+    "followUps": [
+      "結局、現場で何が変わるのですか。",
+      "今やる必然性はどこにありますか。"
+    ],
+    "successSignals": ["抽象と具体の往復", "聞き手に必要な粒度", "実施範囲の明示"],
+    "constraints": ["概念語だけで終わらない", "効果を断定しすぎない"]
   }
 ]
-

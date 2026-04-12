@@ -14,18 +14,25 @@
   },
   "criteria": [
     {
-      "id": "persuasion",
-      "name": "相手視点",
-      "weight": 0.35,
-      "description": "相手の関心軸に合わせられているか。",
-      "signals": ["相手便益", "意思決定負担の軽減", "懸念への配慮"]
+      "id": "audienceFit",
+      "name": "利害関係者適合",
+      "weight": 0.24,
+      "description": "相手の関心軸と判断材料に合わせて説明を調整できているか。",
+      "signals": ["相手便益", "判断材料の選択", "利害関係者別の説明"]
     },
     {
       "id": "structure",
       "name": "提案構造",
-      "weight": 0.25,
+      "weight": 0.18,
       "description": "提案の流れが整理されているか。",
       "signals": ["課題", "提案", "効果", "次の一手"]
+    },
+    {
+      "id": "balancedMessage",
+      "name": "両面提示",
+      "weight": 0.18,
+      "description": "メリットだけでなく、リスクや不確実性も透明に扱えているか。",
+      "signals": ["メリットとリスクの両面提示", "トレードオフ説明", "不確実性の透明性"]
     },
     {
       "id": "objectionHandling",
@@ -45,6 +52,8 @@
   "aggregateMetrics": [
     "answerPreparationSec",
     "benefitMarkerCount",
-    "closingMarkerCount"
+    "hedgeMarkerCount",
+    "closingMarkerCount",
+    "repairMarkerCount"
   ]
 }

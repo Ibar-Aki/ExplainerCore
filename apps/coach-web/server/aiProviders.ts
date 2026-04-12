@@ -348,6 +348,7 @@ export async function buildEvaluation(
     '必須キー: overallScore(number), band(string), summary(string), strengths(string[]), risks(string[]), nextActions(string[]), breakdown([{criterionId,label,score,rationale,improvement}]), metrics(object), selfCheckComparison(object|null)',
     `moduleId: ${request.moduleId}`,
     `answerPreparationSec: ${request.answerPreparationSec}`,
+    `timeLimitSec: ${request.timeLimitSec}`,
     `rubric: ${JSON.stringify(rubric)}`,
     `transcript: ${request.transcript}`,
     `selfReview: ${request.selfReview ?? ''}`,

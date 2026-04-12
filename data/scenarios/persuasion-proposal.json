@@ -28,5 +28,35 @@
     ],
     "successSignals": ["相手視点", "トレードオフ説明", "クロージング"],
     "constraints": ["相手の懸念を矮小化しない"]
+  },
+  {
+    "id": "persuasion-executive-budget-request",
+    "moduleId": "persuasion-lab",
+    "title": "経営層向け追加予算の提案",
+    "difficulty": "stretch",
+    "context": "追加予算が必要だが、経営層は投資対効果と失敗リスクを重視している。",
+    "role": "あなたは提案者。相手は経営層。",
+    "prompt": "追加予算が必要な理由、見込める効果、失敗時のリスク抑制策を 90 秒で説明してください。",
+    "followUps": [
+      "今の予算内でやる選択肢はないのですか。",
+      "投資回収の見込みをどう見ていますか。"
+    ],
+    "successSignals": ["判断材料の選択", "両面提示", "次の意思決定依頼"],
+    "constraints": ["楽観論だけで押さない", "曖昧な効果を言い切らない"]
+  },
+  {
+    "id": "persuasion-cross-team-alignment",
+    "moduleId": "persuasion-lab",
+    "title": "他部署協力の合意形成",
+    "difficulty": "pressure",
+    "context": "他部署の協力が必要だが、相手部署は自部門の負荷増を懸念している。",
+    "role": "あなたは推進役。相手は他部署責任者。",
+    "prompt": "他部署に協力してもらう理由、相手部署の便益、負荷を抑える設計を説明してください。",
+    "followUps": [
+      "こちらにメリットが薄いように見えます。",
+      "結局うちの工数が増えるのではないですか。"
+    ],
+    "successSignals": ["相手部署の便益", "負荷への先回り", "次の合意ステップ"],
+    "constraints": ["自部門都合だけで押さない", "懸念を軽く扱わない"]
   }
 ]

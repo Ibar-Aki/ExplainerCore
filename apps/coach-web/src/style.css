@@ -308,6 +308,18 @@ button {
   margin-top: 18px;
 }
 
+.time-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 18px;
+}
+
+.active-chip {
+  background: rgba(19, 123, 132, 0.16);
+  color: #0d6169;
+}
+
 .wide {
   grid-column: 1 / -1;
 }
@@ -403,6 +415,24 @@ textarea {
   display: grid;
   gap: 16px;
   margin-top: 12px;
+}
+
+.signal-card,
+.metric-card {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(17, 50, 64, 0.08);
+}
+
+.signal-card h4,
+.metric-card strong {
+  margin: 0;
+}
+
+.signal-card ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
 }
 
 .scenario-meta {
@@ -527,6 +557,18 @@ textarea {
   flex-wrap: wrap;
   gap: 14px;
   margin: 10px 0 14px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.3rem;
 }
 
 .audio-player {

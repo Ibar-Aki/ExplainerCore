@@ -4,6 +4,33 @@ function formatScore(score: number) {
   return score.toFixed(1);
 }
 
+function formatMetricLabel(key: string) {
+  const labels: Record<string, string> = {
+    answerPreparationSec: '準備時間',
+    timeLimitSec: '制限時間',
+    estimatedReadingSec: '推定発話時間',
+    structureMarkerCount: '構造マーカー',
+    benefitMarkerCount: '便益マーカー',
+    repairMarkerCount: '是正マーカー',
+    hedgeMarkerCount: '不確実性マーカー',
+    closingMarkerCount: 'クロージングマーカー',
+    fillerCount: 'フィラー',
+    longPauseCount: '長ポーズ記号',
+    selfPerceptionGap: '自己認識差分',
+    charCount: '文字数',
+  };
+
+  return labels[key] ?? key;
+}
+
+function formatMetricValue(value: number | string) {
+  if (typeof value === 'number') {
+    return Number.isInteger(value) ? String(value) : value.toFixed(1);
+  }
+
+  return value;
+}
+
 interface PracticeWorkspaceProps {
   audioFileName: string;
   audioUrl: string;
@@ -101,6 +128,19 @@ export function PracticeWorkspace(props: PracticeWorkspaceProps) {
           </label>
         </div>
 
+        <div className="time-presets">
+          {[30, 60, 90].map((preset) => (
+            <button
+              key={preset}
+              className={`ghost-button ${timeLimitSec === preset ? 'active-chip' : ''}`}
+              type="button"
+              onClick={() => onTimeLimitChange(preset)}
+            >
+              {preset} 秒
+            </button>
+          ))}
+        </div>
+
         <button className="primary-button" type="button" onClick={onGenerate} disabled={loading}>
           セッション生成
         </button>
@@ -122,6 +162,25 @@ export function PracticeWorkspace(props: PracticeWorkspaceProps) {
               </div>
               <p className="scenario-context">{generatedSession.scenario.context}</p>
               <p className="scenario-prompt">{generatedSession.scenario.prompt}</p>
+
+              <div className="mini-columns">
+                <div className="signal-card">
+                  <h4>成功条件</h4>
+                  <ul>
+                    {generatedSession.scenario.successSignals.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="signal-card">
+                  <h4>制約</h4>
+                  <ul>
+                    {generatedSession.scenario.constraints.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
 
               <div className="mini-columns">
                 <div>
@@ -270,6 +329,28 @@ export function PracticeWorkspace(props: PracticeWorkspaceProps) {
                   <small>{evaluation.selfCheckComparison.summary}</small>
                 </div>
               )}
+
+              <div className="metric-grid">
+                {Object.entries(evaluation.metrics)
+                  .filter(([key]) =>
+                    [
+                      'answerPreparationSec',
+                      'timeLimitSec',
+                      'estimatedReadingSec',
+                      'fillerCount',
+                      'longPauseCount',
+                      'structureMarkerCount',
+                      'hedgeMarkerCount',
+                      'selfPerceptionGap',
+                    ].includes(key),
+                  )
+                  .map(([key, value]) => (
+                    <div key={key} className="metric-card">
+                      <span>{formatMetricLabel(key)}</span>
+                      <strong>{formatMetricValue(value)}</strong>
+                    </div>
+                  ))}
+              </div>
 
               <div className="mini-columns">
                 <div>

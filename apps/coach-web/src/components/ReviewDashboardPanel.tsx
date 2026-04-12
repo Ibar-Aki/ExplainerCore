@@ -8,6 +8,8 @@ function formatScore(score: number) {
 interface ReviewDashboardPanelProps {
   history: SessionHistoryItem[];
   latestAverage: number;
+  latestSelfCheckDeltaAverage?: number;
+  latestSelfCheckDeltaCount: number;
   latestThreeCount: number;
   moduleSummaries: ModuleSummary[];
   nextRecommendation: string;
@@ -21,6 +23,8 @@ export function ReviewDashboardPanel(props: ReviewDashboardPanelProps) {
   const {
     history,
     latestAverage,
+    latestSelfCheckDeltaAverage,
+    latestSelfCheckDeltaCount,
     latestThreeCount,
     moduleSummaries,
     nextRecommendation,
@@ -56,6 +60,19 @@ export function ReviewDashboardPanel(props: ReviewDashboardPanelProps) {
           <span>最も強い領域</span>
           <strong>{strongestModule ? strongestModule.title : '未測定'}</strong>
           <small>{strongestModule ? `平均 ${formatScore(strongestModule.average)}` : '履歴を作ると表示されます。'}</small>
+        </div>
+        <div className="summary-card">
+          <span>自己認識差分</span>
+          <strong>
+            {typeof latestSelfCheckDeltaAverage === 'number'
+              ? `${latestSelfCheckDeltaAverage >= 0 ? '+' : ''}${formatScore(latestSelfCheckDeltaAverage)}`
+              : '-'}
+          </strong>
+          <small>
+            {latestSelfCheckDeltaCount > 0
+              ? `直近 ${latestSelfCheckDeltaCount} 件の平均差分`
+              : 'Baseline の比較履歴がまだ不足しています。'}
+          </small>
         </div>
         <div className="summary-card">
           <span>最優先で鍛える領域</span>

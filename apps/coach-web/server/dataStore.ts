@@ -78,6 +78,7 @@ export async function saveTranscriptRecord(
     transcript: request.transcript,
     selfReview: request.selfReview,
     answerPreparationSec: request.answerPreparationSec,
+    timeLimitSec: request.timeLimitSec,
     audioFileName: request.audioFileName,
     savedAt: new Date().toISOString(),
     baselineSelfCheck: request.baselineSelfCheck,

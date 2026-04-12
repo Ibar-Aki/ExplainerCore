@@ -2,7 +2,7 @@
 
 - 作成日: 2026-04-09 00:20 JST
 - 作成者: Codex (GPT-5)
-- 更新日: 2026-04-10
+- 更新日: 2026-04-12
 
 ## 概要
 
@@ -20,6 +20,7 @@ ExplainerCore は、日本語の社内会議や報告を主戦場として、説
 現時点では、以下が利用できます。
 
 - `prompts/deep-research` に 5 本の外部 LLM 向け調査プロンプト
+- `docs/research/deep-research` に整理済みの deep research レポート
 - `data/rubrics` にモジュール別ルーブリック JSON
 - `data/scenarios` に会議・報告・詰め対応・説得シナリオ JSON
 - `apps/coach-web` にローカル Web アプリ
@@ -39,8 +40,11 @@ ExplainerCore は、日本語の社内会議や報告を主戦場として、説
 - 実際にその回で `Remote` か `Fallback` だったかは、生成結果と採点結果の `providerMessage` と `Mode` を見ます
 - Baseline の自己診断スライダーと自己認識メモはローカル draft として保持され、Baseline 採点時にはセッション記録にも保存されます
 - 継続評価の速度系メトリクスは、現時点では「質問提示後に録音開始へ入るまでの準備時間」を `answerPreparationSec` として扱います
+- セッションごとの制限時間は `timeLimitSec` として保存され、評価結果には `estimatedReadingSec` `fillerCount` `longPauseCount` `selfPerceptionGap` などの簡易メトリクスも含まれます
 - rubrics/scenarios はサーバープロセス内でキャッシュされ、履歴は `sessions/reviews/index.json` を優先して参照します
 - 各訓練モジュールには、研究ベースで短時間に回せる `Evidence-Based Warmups` が付き、そこから今回の重点へ直接反映できます
+- `Session Setup` では 30 / 60 / 90 秒プリセットを使え、シナリオ本文に秒数がある場合は既定値にも反映されます
+- `Scenario` では prompt に加えて `successSignals` と `constraints` を表示し、`Session Review Dashboard` では自己認識差分の平均も確認できます
 
 ## ディレクトリ方針
 
@@ -60,6 +64,7 @@ ExplainerCore は、日本語の社内会議や報告を主戦場として、説
 - 評価設計: [`baseline-framework.md`](C:/Work_Codex/ExplainerCore/docs/evaluation/baseline-framework.md)
 - 訓練運用: [`operating-playbook.md`](C:/Work_Codex/ExplainerCore/docs/training/operating-playbook.md)
 - UI/UX 構成: [`app-information-architecture.md`](C:/Work_Codex/ExplainerCore/docs/ux/app-information-architecture.md)
+- deep research 一覧: [`index.md`](C:/Work_Codex/ExplainerCore/docs/research/deep-research/index.md)
 
 ## coach-web の起動
 
@@ -100,4 +105,4 @@ npm run build
 
 - API キーを入れて OpenAI / Claude / Gemini の Remote 採点を 1 回ずつ確認する
 - 実運用セッションを増やし、履歴からルーブリックの重みと nextActions の質を調整する
-- deep research の調査結果を `docs/research` に追記し、`data/scenarios` と `data/rubrics` に反映する
+- deep research の調査結果を [`docs/research/deep-research`](C:/Work_Codex/ExplainerCore/docs/research/deep-research/index.md) から見直し、`data/scenarios` と `data/rubrics` に反映する

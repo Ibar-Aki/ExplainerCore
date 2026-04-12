@@ -93,6 +93,16 @@ export default function App() {
   const currentScenarios = bootstrap?.scenarios.filter((scenario) => scenario.moduleId === selectedModuleId) ?? [];
   const currentWarmups = getWarmupsForModule(selectedModuleId);
 
+  function inferScenarioTimeLimitSec(scenarioId: string, fallbackSec: number) {
+    const scenario = currentScenarios.find((entry) => entry.id === scenarioId);
+    if (!scenario) {
+      return fallbackSec;
+    }
+
+    const match = scenario.prompt.match(/(\d+)\s*秒/);
+    return match ? Number(match[1]) : fallbackSec;
+  }
+
   useEffect(() => {
     void (async () => {
       try {
@@ -137,6 +147,15 @@ export default function App() {
     setCustomFocus('');
     recorder.resetRecorderSession();
   }, [bootstrap, selectedModuleId]);
+
+  useEffect(() => {
+    if (!bootstrap || selectedModuleId === 'session-review-dashboard' || !selectedScenarioId) {
+      return;
+    }
+
+    const nextModule = bootstrap.modules.find((module) => module.id === selectedModuleId);
+    setTimeLimitSec(inferScenarioTimeLimitSec(selectedScenarioId, nextModule?.defaultTimeLimitSec ?? 60));
+  }, [bootstrap, selectedModuleId, selectedScenarioId]);
 
   async function refreshHistory() {
     const nextHistory = await fetchHistory();
@@ -204,6 +223,7 @@ export default function App() {
         transcript: recorder.transcript,
         selfReview,
         answerPreparationSec,
+        timeLimitSec: generatedSession.timeLimitSec,
         audioFileName: audioFileName || undefined,
         baselineSelfCheck:
           generatedSession.moduleId === 'baseline-assessor'
@@ -345,6 +365,8 @@ export default function App() {
               <ReviewDashboardPanel
                 history={history}
                 latestAverage={dashboard.latestAverage}
+                latestSelfCheckDeltaAverage={dashboard.latestSelfCheckDeltaAverage}
+                latestSelfCheckDeltaCount={dashboard.latestSelfCheckDeltaCount}
                 latestThreeCount={dashboard.latestThree.length}
                 moduleSummaries={dashboard.moduleSummaries}
                 nextRecommendation={dashboard.nextRecommendation}

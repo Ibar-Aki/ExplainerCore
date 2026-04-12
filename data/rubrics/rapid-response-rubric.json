@@ -2,7 +2,7 @@
   "id": "rapid-response-rubric",
   "moduleId": "rapid-response-drill",
   "title": "即答ドリルルーブリック",
-  "description": "短時間での端的な応答を評価する。",
+  "description": "短時間での端的な応答を、初動・時間設計・不確実性処理まで含めて評価する。",
   "scale": {
     "min": 1,
     "max": 5,
@@ -16,35 +16,46 @@
     {
       "id": "speed",
       "name": "初動速度",
-      "weight": 0.3,
+      "weight": 0.24,
       "description": "迷いなく話し始められたか。",
       "signals": ["無音が短い", "すぐ結論に入る", "言い直しが少ない"]
     },
     {
       "id": "clarity",
       "name": "要点の明快さ",
-      "weight": 0.25,
+      "weight": 0.22,
       "description": "最初の数文で伝わるか。",
       "signals": ["端的", "曖昧さが少ない", "一文目が強い"]
     },
     {
       "id": "structure",
       "name": "短時間構成",
-      "weight": 0.25,
+      "weight": 0.2,
       "description": "限られた時間でも構造があるか。",
       "signals": ["結論", "理由", "次アクション"]
     },
     {
-      "id": "conciseness",
-      "name": "簡潔さ",
-      "weight": 0.2,
-      "description": "冗長にならず収まっているか。",
-      "signals": ["脱線が少ない", "重複が少ない", "時間内完結"]
+      "id": "timeboxing",
+      "name": "時間設計",
+      "weight": 0.17,
+      "description": "30 / 60 / 90 秒の枠に合わせて内容を削れているか。",
+      "signals": ["時間内完結", "情報の削り方が適切", "締めまで届く"]
+    },
+    {
+      "id": "uncertainty",
+      "name": "不確実性処理",
+      "weight": 0.17,
+      "description": "分からない点を短く明示しつつ会話を前に進められるか。",
+      "signals": ["現時点で分かる範囲", "不確実性の明示", "確認事項を残せる"]
     }
   ],
   "aggregateMetrics": [
     "answerPreparationSec",
     "charCount",
-    "estimatedReadingSec"
+    "estimatedReadingSec",
+    "fillerCount",
+    "hedgeMarkerCount",
+    "longPauseCount",
+    "timeLimitSec"
   ]
 }

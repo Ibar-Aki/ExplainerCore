@@ -41,7 +41,7 @@ export const trainingModules: TrainingModule[] = [
     title: 'Baseline Assessor',
     summary: '現状の説明力と会話力を横断診断する。',
     goal: '現状把握と再測定比較',
-    primarySkills: ['説明の明快さ', '構造化', '応答速度'],
+    primarySkills: ['説明の明快さ', '構造化', '自己認識差分'],
     defaultTimeLimitSec: 60,
   },
   {
@@ -49,8 +49,8 @@ export const trainingModules: TrainingModule[] = [
     title: 'Rapid Response Drill',
     summary: '短時間で崩れずに答える反射神経を鍛える。',
     goal: '会議の即答力向上',
-    primarySkills: ['初動速度', '端的さ', '結論先行'],
-    defaultTimeLimitSec: 45,
+    primarySkills: ['初動速度', '時間設計', '不確実性処理'],
+    defaultTimeLimitSec: 30,
   },
   {
     id: 'pressure-defense-simulator',
@@ -186,6 +186,7 @@ export interface EvaluateSessionRequest {
   transcript: string;
   selfReview?: string;
   answerPreparationSec: number;
+  timeLimitSec: number;
   audioFileName?: string;
   baselineSelfCheck?: BaselineSelfCheck;
 }
@@ -224,6 +225,7 @@ export interface SessionTranscriptRecord {
   transcript: string;
   selfReview?: string;
   answerPreparationSec: number;
+  timeLimitSec: number;
   audioFileName?: string;
   savedAt: string;
   baselineSelfCheck?: BaselineSelfCheck;

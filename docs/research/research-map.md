@@ -2,7 +2,7 @@
 
 - 作成日: 2026-04-09 00:20 JST
 - 作成者: Codex (GPT-5)
-- 更新日: 2026-04-09
+- 更新日: 2026-04-11
 
 ## 調査テーマ
 
@@ -69,13 +69,16 @@
 ## 調査結果の格納方針
 
 - 生の結果は `data/raw` に置く
-- 要約は `docs/research` に Markdown で追記する
+- 要約と整理版は `docs/research` 配下に Markdown で置く
+- deep research の主レポートは `docs/research/deep-research` に集約する
 - 実装へ反映した観点は `data/rubrics` `data/scenarios` `docs/evaluation` `docs/training` に転記する
 
 ## 調査済みレポート
 
 - 根拠が比較的強く、しかも簡単に回せる訓練法の整理:
   - [`easy-evidence-based-training-methods.md`](C:/Work_Codex/ExplainerCore/docs/research/evidence-based/easy-evidence-based-training-methods.md)
+- deep research のテーマ別整理:
+  - [`index.md`](C:/Work_Codex/ExplainerCore/docs/research/deep-research/index.md)
 
 ## 最低限ほしい成果
 

@@ -19,6 +19,8 @@ export interface DashboardSnapshot {
   nextRecommendation: string;
   baselineAverage: number;
   baselineAbilities: BaselineAbilityScore[];
+  latestSelfCheckDeltaAverage?: number;
+  latestSelfCheckDeltaCount: number;
 }
 
 export function buildDashboardSnapshot(
@@ -64,6 +66,9 @@ export function buildDashboardSnapshot(
   const weakestModule = [...moduleSummaries].reverse().find((item) => item.count > 0);
   const latestThree = history.slice(0, 3);
   const previousThree = history.slice(3, 6);
+  const latestSelfCheckDeltas = history
+    .filter((item): item is SessionHistoryItem & { selfCheckDelta: number } => typeof item.selfCheckDelta === 'number')
+    .slice(0, 3);
   const latestAverage =
     latestThree.length > 0 ? latestThree.reduce((sum, item) => sum + item.overallScore, 0) / latestThree.length : 0;
   const previousAverage =
@@ -90,5 +95,10 @@ export function buildDashboardSnapshot(
           : '履歴が増えたら弱点別に優先順位を再計算します。',
     baselineAverage,
     baselineAbilities,
+    latestSelfCheckDeltaAverage:
+      latestSelfCheckDeltas.length > 0
+        ? latestSelfCheckDeltas.reduce((sum, item) => sum + item.selfCheckDelta, 0) / latestSelfCheckDeltas.length
+        : undefined,
+    latestSelfCheckDeltaCount: latestSelfCheckDeltas.length,
   };
 }
