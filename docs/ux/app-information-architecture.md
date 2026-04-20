@@ -1,99 +1,130 @@
-# App Information Architecture
+# App Information Architecture — 画面構成とUI設計の意図
 
-- 作成日: 2026-04-09 00:20 JST
-- 作成者: Codex (GPT-5)
-- 更新日: 2026-04-12
+> **UIを変更するとき、または画面の意図がわからなくなったときに読んでください。**
 
-## 画面構成
+- 最終更新: 2026-04-19
 
-### 1. Hero
+---
 
-- プロジェクトの目的
-- 登録モジュール数
-- 直近平均
-- 履歴件数
+## 画面構成の全体像
+
+アプリは上から下へ以下の5つのエリアで構成されています。
+
+```
+┌──────────────────────────────────────────┐
+│  1. Hero エリア                           │  ← プロジェクト目的・直近状況のサマリー
+├──────────────────────────────────────────┤
+│  2. Provider Adapter                      │  ← AIプロバイダの設定状態表示
+├──────────────────────────────────────────┤
+│  3. Module Navigation（左ナビ）           │  ← モジュール切り替え
+├──────────────────────────────────────────┤
+│  4. Module Workspace（中央）              │  ← 訓練の実行スペース
+├──────────────────────────────────────────┤
+│  5. Session Review Dashboard（下部）      │  ← 履歴比較と成長サマリー
+└──────────────────────────────────────────┘
+```
+
+---
+
+## 各エリアの詳細
+
+### 1. Hero エリア
+
+| 表示内容 | 目的 |
+|---|---|
+| プロジェクトの目的（一文） | 使う前にゴールを再確認する |
+| 登録モジュール数 | 訓練の選択肢を把握する |
+| 直近平均スコア | 今の状態をひと目で確認する |
+| 保存済みセッション数 | 蓄積量を把握してモチベーションにする |
 
 ### 2. Provider Adapter
 
-- OpenAI / Claude / Gemini の設定状態
-- model 名
-- 設定時の注意文
+- OpenAI / Claude / Gemini それぞれの設定状態（`CONFIGURED` / `NOT SET`）を表示
+- **重要:** `CONFIGURED` はAPIキーが設定されているという意味であり、Remote採点の成功を保証するものではない
+- 実際のRemote/Fallback切り替えは、採点結果の `Mode` フィールドで確認する
 
 ### 3. Module Navigation
 
-- Baseline Assessor
-- Rapid Response Drill
-- Pressure Defense Simulator
-- Persuasion Lab
-- Session Review Dashboard
+左ナビから5つのモジュールを切り替えます。
+
+| モジュール | 目的 |
+|---|---|
+| Baseline Assessor | 現状の説明力を診断する |
+| Rapid Response Drill | 即答力を鍛える |
+| Pressure Defense Simulator | 詰められても崩れない力を鍛える |
+| Persuasion Lab | 提案を通す力を鍛える |
+| Session Review Dashboard | 過去セッションを振り返る |
 
 ### 4. Module Workspace
 
-- Baseline Self Check
-- Evidence-Based Warmups
-- Session Setup
-- Scenario
-- Record / Transcript
-- Rubric
-- Evaluation
+訓練の実行スペースです。以下の順で使います。
+
+| ステップ | パネル名 | 内容 |
+|---|---|---|
+| ① | Baseline Self Check | 自己診断スライダーと自己認識メモを入力（Baselineのみ） |
+| ② | Evidence-Based Warmups | 今日の重点に合わせたウォームアップを1つ選ぶ |
+| ③ | Session Setup | 制限時間（30/60/90秒プリセットまたは直接入力）を設定 |
+| ④ | Scenario | シナリオ本文・`successSignals`・`constraints` を確認 |
+| ⑤ | Record / Transcript | 録音して文字起こしを入力 |
+| ⑥ | Rubric | 採点軸を確認する |
+| ⑦ | Evaluation | AI採点結果・メトリクス・自己認識差分を確認 |
+
+**設計上の重要ポイント:**
+- 自己診断スライダーと自己認識メモは `localStorage` に draft 保存される（採点前に消えない）
+- Baseline採点時に draft から `baselineSelfCheck` を作成してセッション記録にも保存される
+- `Session Setup` でシナリオ本文に秒数が含まれる場合、その値が制限時間の既定値に自動反映される
+- `Scenario` パネルでは prompt だけでなく `successSignals`（成功の兆候）と `constraints`（制約）も先に表示する
 
 ### 5. Session Review Dashboard
 
-- 次の推奨アクション
-- 直近トレンド
-- 強い領域 / 弱い領域
-- モジュール別平均
-- セッション履歴一覧
+| 表示内容 | 目的 |
+|---|---|
+| 次の推奨アクション | 弱点に基づいて次に何をやるか提案する |
+| 直近トレンド（直近3回 vs その前3回） | 改善しているかを確認する |
+| 強い領域 / 弱い領域 | どこに時間を使うかを判断する |
+| モジュール別平均スコア | 能力ごとのバランスを確認する |
+| 直近の自己認識差分の平均 | 自己評価のズレ傾向を追う |
+| セッション履歴一覧 | 過去のセッションを振り返る |
 
-## 現在の実装メモ
-
-- 画面上部は、プロジェクトの目的と直近トレーニング状況をまとめたヒーロー領域
-- `Provider Adapter` は設定状態のみを表示する
-- 左側ナビゲーションでモジュールを切り替える
-- `Baseline Assessor` では自己診断スライダーと自己認識メモを先に入力する
-- 各実戦モジュールには、研究ベースの短時間ウォームアップ群を表示する
-- ウォームアップの `今回の重点に反映` ボタンで、セッション生成時の focus に直結させる
-- Baseline の自己診断は draft としてローカル保存し、採点時にはセッション記録にも保存する
-- 中央ワークスペースで `Session Setup` `Scenario` `Record / Transcript` `Rubric` `Evaluation` を順に扱う
-- `Session Setup` では制限時間の直接入力に加え、30 / 60 / 90 秒のプリセットを使える
-- シナリオ本文に秒数が含まれる場合は、その値を既定の制限時間として自動反映する
-- `Scenario` では prompt だけでなく `successSignals` と `constraints` を先に確認できる
-- 下部の `Session Review Dashboard` で保存済みセッション比較と成長サマリーを扱う
-- 実際の Remote / Fallback 実行結果は、生成結果と採点結果に表示する
+---
 
 ## コンポーネント構成
 
-- `App.tsx`: 全体オーケストレーション
-- `ProviderPanel.tsx`: provider 選択と設定状態表示
-- `ModuleNav.tsx`: モジュール切替
-- `BaselineSelfCheckPanel.tsx`: 自己診断 UI
-- `EvidenceWarmupsPanel.tsx`: 根拠付きウォームアップ UI
-- `PracticeWorkspace.tsx`: 訓練ワークスペース
-- `ReviewDashboardPanel.tsx`: 履歴比較ダッシュボード
-- `usePracticeRecorder.ts`: 録音と音声認識
+| ファイル | 役割 |
+|---|---|
+| `App.tsx` | 全体オーケストレーション（状態管理の中枢） |
+| `ProviderPanel.tsx` | Provider設定状態の表示 |
+| `ModuleNav.tsx` | モジュール切り替えナビ |
+| `BaselineSelfCheckPanel.tsx` | 自己診断UI |
+| `EvidenceWarmupsPanel.tsx` | Evidence-Based Warmups UI |
+| `PracticeWorkspace.tsx` | メイン訓練ワークスペース |
+| `ReviewDashboardPanel.tsx` | 履歴比較ダッシュボード |
+| `usePracticeRecorder.ts` | 録音・音声認識フック |
 
-## 追加された要素
+---
 
-- 自己診断平均と 4 能力別の自己認識サマリー
-- 自己認識平均と AI 評価平均との差分カード
-- モジュール別平均スコアの比較カード
-- 直近 3 セッションとその前 3 セッションの差分表示
-- 直近の自己認識差分の平均表示
-- 次に鍛えるべきモジュールの推奨表示
-- モジュール別に最適化した short warmup cards と focus 反映導線
-- Evaluation では準備時間、制限時間、推定発話時間、フィラー数などの簡易メトリクスも表示する
-- Evaluation では `successSignals` `constraints` と採点メトリクスを見比べながら振り返れる
+## 導線設計の方針
 
-## 導線方針
+- **初回ユーザー:** Dashboard → `Baseline Assessor` へ誘導する
+- **即答力を鍛えたい日:** `Rapid Response Drill` を最短動線に置く
+- **追及への耐性を鍛えたい日:** `Pressure Defense Simulator` へすぐ切り替えられるようにする
+- **どのモジュールからでも:** `Session Review Dashboard` へ戻れるようにする
 
-- 初回ユーザーは Dashboard から `Baseline Assessor` へ誘導する
-- 即答力を鍛えたい日は `Rapid Response Drill` を最短動線に置く
-- 追及への耐性を鍛えたい日は `Pressure Defense Simulator` へすぐ切り替えられるようにする
-- 全モジュールから最終的に `Session Review Dashboard` へ戻れるようにする
+---
 
-## UI/UX メモ
+## UI/UXの方針
 
-- 1 画面で「状況」「回答」「評価」が分断されない構成にする
-- 状態色は落ち着いた紺、青緑、琥珀で統一する
-- 録音中、制限時間、採点完了は視覚的に明確にする
-- 文章中心の UI にしつつ、圧迫感のある詰め対応モードは緊張感のある見た目に寄せる
+- 1つの画面で「状況確認 → 回答 → 評価」が完結するようにし、画面遷移を最小化する
+- 状態色は **落ち着いた紺・青緑・琥珀** で統一する
+- 録音中・制限時間のカウントダウン・採点完了は、視覚的に明確区別する
+- Pressure Defense モジュールは、緊張感のある見た目（配色・構成）に寄せる
+
+---
+
+## UIを変更したら必ず更新する
+
+このドキュメントを更新するとともに、変更内容が `docs/evaluation/` や `docs/training/` の記述とも整合しているか確認してください。
+
+---
+
+**→ 次に読む:** [research-map.md](../research/research-map.md)（調査レポートの一覧）
